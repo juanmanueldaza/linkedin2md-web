@@ -1,6 +1,6 @@
 import { zipSync, strToU8 } from 'fflate';
 import './style.css';
-import { pretty, extractZip, csvToMarkdown, groupCsvs, buildIndex } from './convert';
+import { extractZip, renderGroup, groupCsvs, buildIndex, type GroupCsvsReport } from './convert';
 
 function downloadBlob(blob: Blob, filename: string) {
   const url = URL.createObjectURL(blob);
@@ -50,7 +50,8 @@ async function handleFile(file: File) {
     const buf = await file.arrayBuffer();
     const entries = extractZip(buf);
 
-    const groups = groupCsvs(entries);
+    const report: GroupCsvsReport = { empty: [] };
+    const groups = groupCsvs(entries, report);
 
     if (!groups.size) {
       status.textContent = 'No CSV data found in this archive.';
@@ -61,11 +62,10 @@ async function handleFile(file: File) {
     const out: Record<string, Uint8Array> = {};
     const names: string[] = [];
     for (const [base, g] of groups) {
-      const md = csvToMarkdown(pretty(base), g.fields, g.rows);
-      out[base + '.md'] = strToU8(md);
+      out[base + '.md'] = strToU8(renderGroup(base, g));
       names.push(base + '.md');
     }
-    out['index.md'] = strToU8(buildIndex(groups));
+    out['index.md'] = strToU8(buildIndex(groups, report.empty));
     names.push('index.md');
     const zipped = zipSync(out, { level: 6 });
 
