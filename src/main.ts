@@ -19,6 +19,12 @@ const status = document.getElementById('status') as HTMLDivElement;
 const filesList = document.getElementById('files') as HTMLUListElement;
 
 drop.addEventListener('click', () => fileInput.click());
+drop.addEventListener('keydown', e => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    fileInput.click();
+  }
+});
 drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('drag'); });
 drop.addEventListener('dragleave', () => drop.classList.remove('drag'));
 drop.addEventListener('drop', e => {
@@ -67,5 +73,7 @@ async function handleFile(file: File) {
     downloadBlob(new Blob([zipped as BlobPart], { type: 'application/zip' }), 'linkedin-export-markdown.zip');
   } catch (err) {
     status.textContent = 'Error: ' + (err instanceof Error ? err.message : String(err));
+  } finally {
+    fileInput.value = '';
   }
 }

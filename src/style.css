@@ -6,6 +6,7 @@ h1 { margin-bottom: 0.25rem; }
 .tagline { color: #555; margin-top: 0; }
 .drop { border: 2px dashed #999; border-radius: 12px; padding: 3rem 1rem; text-align: center; cursor: pointer; transition: background .15s; }
 .drop:hover, .drop.drag { background: rgba(0,0,0,.04); }
+.drop:focus-visible { outline: 3px solid #0066cc; outline-offset: 2px; }
 .drop p { margin: 0.25rem 0; }
 .hint { font-size: 0.85rem; color: #777; }
 .status { margin: 1rem 0; min-height: 1.5rem; }
