@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; frame-ancestors 'none'; base-uri 'self'" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Convert a LinkedIn data export ZIP into Markdown. 100% in your browser. Nothing is uploaded." />
+    <title>linkedin2md — LinkedIn export to Markdown, in your browser</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>linkedin2md</h1>
+      <p class="tagline">Your LinkedIn archive, converted to Markdown. In your browser. Nothing uploaded.</p>
+
+      <div id="drop" class="drop" tabindex="0" role="button" aria-label="Drop LinkedIn export ZIP">
+        <p>Drop your LinkedIn data export (.zip) here</p>
+        <p class="hint">or click to choose a file</p>
+        <input id="file" type="file" accept=".zip,application/zip" hidden />
+      </div>
+
+      <div id="status" class="status" aria-live="polite"></div>
+      <ul id="files" class="files"></ul>
+
+      <p class="notice">
+        Your export may include messages and other people's contact details. The download includes all of it.
+        Do not paste other people's data into a service you do not trust.
+      </p>
+      <p class="notice">
+        Not affiliated with LinkedIn Corporation. LinkedIn is a trademark of LinkedIn Corporation.
+      </p>
+    <p class="notice"><a href="/privacy.html">Privacy</a> · Not affiliated with LinkedIn Corporation.</p>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
