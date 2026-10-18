@@ -38,7 +38,12 @@ fileInput.addEventListener('change', () => {
   if (f) handleFile(f);
 });
 
+let busy = false;
+
 async function handleFile(file: File) {
+  if (busy) return;
+  busy = true;
+  drop.classList.add('busy');
   status.textContent = 'Reading archive…';
   filesList.innerHTML = '';
   try {
@@ -74,6 +79,8 @@ async function handleFile(file: File) {
   } catch (err) {
     status.textContent = 'Error: ' + (err instanceof Error ? err.message : String(err));
   } finally {
+    busy = false;
+    drop.classList.remove('busy');
     fileInput.value = '';
   }
 }
